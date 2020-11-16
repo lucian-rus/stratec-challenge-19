@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Info File</title>
+</head>
+
+<body link="black" vlink="black" alink="black">
+    <h1><u> Stratec Internship Application Info </u></h1>
+    <div>
+        <h2>Important information</h2>
+        <p style="padding-left: 27px">Link to my private repository that stores the application:
+            <a href=https://github.com/bananas04/stratec-app.git>https://github.com/bananas04/stratec-app.git </a> </p>
+                <p style="padding-left: 27px">The application has 2 functionality modes:</p>
+        <ul>
+
+            <li>
+                <p>DEFAULT MODE</p>
+                <p> - a mode that allows the user to get their own input then process it using the controls
+                    provided by the application
+                </p>
+            </li>
+            <li>
+                <p>AUTO MODE</p>
+                <p> - a mode that allows the user to instantly solve the tasks given using the solve buttons
+                </p>
+            </li>
+
+        </ul>
+        <p style="padding-left: 27px">The <b>inputs</b> file contains 3 additional .csv file that can be tested
+            in the default mode.</p>
+    </div>
+    <div id="contents">
+        <img title="screenshot of the application GUI in default mode,running on a linux machine" src="images/default"
+            width="600" height="350" style="float: right; padding-top: 30px; padding-right: 30px">
+        <h2> Contents of the help file</h2>
+        <ul>
+            <li>
+                <a href="#functionality">Application functionality</a>
+                <p> - details about how the application is working </p>
+            </li>
+
+            <li>
+                <a href="#functionality">Algorithm visualization</a>
+                <p> - a graphical visualization of how the entity searching algorithm works</p>
+            </li>
+
+            <li>
+                <a href="#description">Algorithm description</a>
+                <p> - details about how the algorithm is working </p>
+            </li>
+
+            <li>
+                <a href="#controls">Controls</a>
+                <p> - details about the controls that are present in the application </p>
+            </li>
+
+            <li>
+                <a href="#notes">Notes</a>
+                <p> - details about the controls that are present in the application </p>
+            </li>
+        </ul>
+    </div>
+
+    <div id="functionality" style="padding-top: 10px">
+        <h2> Application functionality </h2>
+        <img src="images/diagram.png" width="680" height="400"
+            style="float: left; margin-right: 20px; margin-left: 27px" />
+        <p style="padding-left: 27px; padding-right: 30px">At launch, the main class, Handler will create a GUI
+            containing the controls of the application. The Import button will open a dialog that
+            will allow the user to select the desired input file and get it's path. The Generate
+            button will then create the input array by calling the GetInput class and will return
+            it to the Handler class then further it to the Overlay class. By selecting any of the
+            Solve buttons, the respective methods in the Overlay class are called resulting in an
+            output that is sent back to the Handler class to be displayed on the console.</p>
+        <a href="#contents">back to top</a>
+    </div>
+
+    <div id="visualization">
+        <h2> Algorithm visualization </h2>
+        <img title="algorithm visualization" src="images/algorithm.gif" width="200" height="200"
+            style="float: left; margin-right: 20px;" />
+
+        <ul>
+            <li>
+                <div>
+                    <img src="images/grey.png" width="20" height="20" style="float: left; margin-right: 10px" />
+                    <p> - entity</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <img src="images/blue.png" width="20" height="20" style="float: left; margin-right: 10px" />
+                    <p> - current position outside of entity</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <img src="images/red.png" width="20" height="20" style="float: left; margin-right: 10px" />
+                    <p> - current position inside of entity</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <img src="images/start.png" width="20" height="20" style="float: left; margin-right: 10px" />
+                    <p> - entity starting coordinates</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <img src="images/border.png" width="20" height="20" style="float: left; margin-right: 10px" />
+                    <p> - border drawn after the entire entity is found</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div id="description" style="padding-top: 10px">
+        <h2> Algorithm description </h2>
+        <p style="padding-left: 27px">The algorithm starts at position [1][1] of the array and
+            checks for the existence of 1s. As soon as the first instance is found, the loops searching
+            the array for entities are broken and the process starts by setting the starting
+            position using the starting row as <b>current row - 1</b> and the starting column as
+            <b>current column - 1</b> then by checking for the existence of 1s below the current position,
+            saving it as <b>current column</b> in case it exists. The algorithm then proceeds to search
+            for all the 1s on the current row, saving the <b>maximum length</b> of the row as it goes. When all
+            the 1s are found, the algorithm goes back to the <b>current column</b> in the next row
+            and starts looking for 1s to the left. If there are any, the algorithm moves the
+            <b>current position</b> to the left and the starting column position at <b>current column - 1</b>.
+            The <b>maximum length</b> of each row is saved (in order to get the maximum length of the entity)
+            as well as the <b>height</b> of the entity, which will later be used to create the borders around
+            and save its dimensions. Every 1 that is found is replaced by a 3 to avoid being detected
+            again the next time the process starts. If either the <b>maximum length</b> or the <b>height</b> is
+            1, then the entity is declared to be <b>noise</b>, and will not be bordered nor its coordinates
+            saved. After the whole process is finished, an entity is created and stored as
+            an Algorithm class object in the Overlay class. <br> <br> Every entity has multiple properties: </p>
+        <ul>
+            <li>
+                <p><b>start_i</b> value</p>
+                <p> - represents the y coordinate of the entity</p>
+            </li>
+
+            <li>
+                <p><b>start_j</b> value</p>
+                <p> - represents the x coordinate of the entity</p>
+            </li>
+
+            <li>
+                <p><b>height</b> value</p>
+                <p> - represents the height of the entity</p>
+            </li>
+
+            <li>
+                <p><b>length</b> value</p>
+                <p> - represents the maximum of the entity</p>
+            </li>
+
+            <li>
+                <p><b>string</b></p>
+                <p> - represents the string associated with the entity</p>
+            </li>
+
+            <li>
+                <p><b>string rotated by 90 degrees</b></p>
+                <p> - represents the string associated with the entity rotated by 90 degrees</p>
+            </li>
+
+            <li>
+                <p><b>string rotated by 180 degrees</b></p>
+                <p> - represents the string associated with the entity rotated by 180 degrees</p>
+            </li>
+
+            <li>
+                <p><b>string rotated by 270 degrees</b></p>
+                <p> - represents the string associated with the entity rotated by 270 degrees</p>
+            </li>
+        </ul>
+        <a href="#contents">back to top</a>
+    </div>
+
+    <div id="controls" style="padding-top: 10px">
+        <h2> Controls help </h2>
+        <ul>
+            <li>
+                <div>
+                    <img src="images/import.png" width="80" height="40" style="float: left; margin-right: 10px" />
+                    <p style="padding: 8px">Imports the CSV file that we will use to
+                        solve the given task.</p>
+                </div>
+            </li>
+
+            <li>
+                <div>
+                    <img src="images/generate.png" width="80" height="40" style="float: left; margin-right: 10px" />
+                    <p style="padding: 8px">Generates the map based on the
+                        imported CSV file.</p>
+                </div>
+            </li>
+
+            <li>
+                <div>
+                    <img src="images/solve1.png" width="80" height="40" style="float: left; margin-right: 10px" />
+                    <p style="padding: 8px">Displays on the output console the number
+                        of non-noise objects based on the imported CSV file.</p>
+                </div>
+            </li>
+
+            <li>
+                <div>
+                    <img src="images/solve2.png" width="80" height="40" style="float: left; margin-right: 10px" />
+                    <p style="padding: 8px">Displays on the output console the number
+                        of non-noise objects alongside their coordinates and size based on the
+                        imported CSV file.</p>
+                </div>
+            </li>
+
+            <li>
+                <div>
+                    <img src="images/solve3.png" width="80" height="40" style="float: left; margin-right: 10px" />
+                    <p>Displays on the output console the number
+                        of non-noise objects alongside their coordinates and size based on the
+                        imported CSV file. In this task the duplicates will also be identified
+                        and grouped and displayed all on a single line.</p>
+                </div>
+            </li>
+
+            <li>
+                <div>
+                    <img src="images/solve4.png" width="80" height="40" style="float: left; margin-right: 10px" />
+                    <p>Displays on the output console the number
+                        of non-noise objects alongside their coordinates and size based on the
+                        imported CSV file. In this task the duplicates will also be identified
+                        alongside their rotations and grouped and displayed all on a single line.</p>
+                </div>
+            </li>
+
+            <li>
+                <div>
+                    <img src="images/showsteps.png" width="80" height="40" style="float: left; margin-right: 10px" />
+                    <p>Enables the display of the solving steps on the map.
+                        The steps are displayed at a selected pace by drawing the entity
+                        idenifiers (yellow highlights around entities).</p>
+                </div>
+            </li>
+
+            <li>
+                <div>
+                    <img src="images/dontshow" width="80" height="40" style="float: left; margin-right: 10px" />
+                    <p style="padding: 8px">Disables the display of the solving steps.</p>
+                </div>
+            </li>
+
+            <li>
+                <div>
+                    <img src="images/slider.png" width="80" height="40" style="float: left; margin-right: 10px" />
+                    <p style="padding: 8px">Sets the speed of the solving steps.</p>
+                </div>
+            </li>
+
+            <li>
+                <div>
+                    <img src="images/clear.png" width="80" height="40" style="float: left; margin-right: 10px" />
+                    <p style="padding: 8px">Clears the output console.</p>
+                </div>
+            </li>
+
+            <li>
+                <div>
+                    <img src="images/help.png" width="80" height="40" style="float: left; margin-right: 10px" />
+                    <p style="padding: 8px">Opens up this HTML file.</p>
+                </div>
+            </li>
+
+            <li>
+                <div>
+                    <img src="images/switch" width="80" height="40" style="float: left; margin-right: 10px" />
+                    <p style="padding: 8px">Toggles between the two functionality modes.</p>
+                </div>
+            </li>
+        </ul>
+        <a href="#contents">back to top</a>
+    </div>
+
+    <div id="notes" style="padding-top: 10px">
+        <h2> Notes </h2>
+        <ul>
+            <li>
+                <p>the maximum number of columns supported by the application is 1000 and the maximum number of rows
+                    is 500</p>
+            </li>
+            <li>
+                <p>the algorithm includes a flaw that was intentionally left in. instead of treating the case of going
+                    up as in (visualization 1) and making additional unnecessary steps, the problem can be solved while
+                    outlining
+                    the entity, simply replacing the 1s left out with 3s (visualization 2). as this step happens before
+                    creating the strings attached to the entity, the problem was easily bypassed</p>
+            </li>
+
+            <img title="visualization 1" src="images/problem.gif" width="200" height="200"
+                style="padding-left: 400px; float: left; margin-right: 50px;" />
+            <img title="visualization 2" src="images/bypass.gif" width="200" height="200" />
+
+            <li>
+
+                <p>this application was specifically designed to both participate in the Internship program competition
+                </p>
+            </li>
+         
+            <li>
+                <p>this info file was written in HTML as it's universally available, not requiring a certain
+                    application in order to be opened</p>
+            </li>
+
+            <li>
+                <p>this application was developed using JDK 11 and the JetBrains IntelliJ IDE</p>
+            </li>
+
+            <li>
+                <p>this info file was written using HTML5 and the Visual Studio Code editor</p>
+            </li>
+        </ul>
+        <a href="#contents">back to top</a>
+    </div>
+</body>
+
+</html>
